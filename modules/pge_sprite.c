@@ -26,7 +26,7 @@ void pge_sprite_set_anim_frame(PGESprite *this, int resource_id) {
 void pge_sprite_draw(PGESprite *this, GContext *ctx) {
 #ifdef PBL_PLATFORM_APLITE
   GRect bounds = this->bitmap->bounds;
-#elif PBL_PLATFORM_BASALT
+#else
   GRect bounds = gbitmap_get_bounds(this->bitmap);
 #endif
   graphics_draw_bitmap_in_rect(ctx, this->bitmap, GRect(this->position.x, this->position.y, bounds.size.w, bounds.size.h));
@@ -51,17 +51,17 @@ bool pge_check_collision(PGESprite* sprite1, PGESprite *sprite2) {
 #ifdef PBL_PLATFORM_APLITE
   GRect bounds1 = sprite1->bitmap->bounds;
   GRect bounds2 = sprite2->bitmap->bounds;
-#elif PBL_PLATFORM_BASALT
+#else
   GRect bounds1 = gbitmap_get_bounds(sprite1->bitmap);
   GRect bounds2 = gbitmap_get_bounds(sprite2->bitmap);
 #endif
 
   GRect rect_a = (GRect){
-    {sprite1->position.x, sprite1->position.y}, 
+    {sprite1->position.x, sprite1->position.y},
     {bounds1.size.w, bounds1.size.h}};
 
   GRect rect_b = (GRect){
-    {sprite2->position.x, sprite2->position.y}, 
+    {sprite2->position.x, sprite2->position.y},
     {bounds2.size.w, bounds2.size.h}};
 
   // Test each corner of the other rect
@@ -71,7 +71,7 @@ bool pge_check_collision(PGESprite* sprite1, PGESprite *sprite2) {
 GRect pge_sprite_get_bounds(PGESprite *this) {
 #ifdef PBL_PLATFORM_APLITE
   GRect bounds = this->bitmap->bounds;
-#elif PBL_PLATFORM_BASALT
+#else
   GRect bounds = gbitmap_get_bounds(this->bitmap);
 #endif
   return GRect(this->position.x, this->position.y, bounds.size.w, bounds.size.h);
